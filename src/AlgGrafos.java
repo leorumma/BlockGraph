@@ -35,6 +35,7 @@ class Graph {
     HashMap<Integer, Vertex> vertex_set;
     int time;
     Boolean acyclic;
+    Boolean isClique = true;
 
     public Graph() {
         vertex_set = new HashMap<>();
@@ -43,9 +44,16 @@ class Graph {
     void bicon_comp() {
         st1 = new Stack<>();
         reset();
-        for (Vertex v1 : vertex_set.values())
-            if (v1.d == null)
+        for (Vertex v1 : vertex_set.values()) {
+            if (v1.d == null) {
                 bicon_comp_visit(v1);
+            }
+        }
+        if (isClique) {
+            System.out.println("\nEste é um grafo bloco pois todas as suas componentes biconexas são cliques \n");
+        } else {
+            System.out.println("\nEste NÃO é um grafo bloco pois existem componentes biconexas que não são cliques \n");
+        }
     }
 
     void bicon_comp_visit(Vertex v1) {
@@ -76,7 +84,6 @@ class Graph {
     void print_bic_comp(Vertex cut_vertex, Vertex aux) {
         componentesBiconexas = new HashSet<>();
         if (st1.empty()) {
-            verificarVertice();
             return;
         }
         System.out.print("\nComponente Biconexa: ");
@@ -87,7 +94,7 @@ class Graph {
         System.out.printf("%d,%d  ", v1.id, v2.id);
         while (v1 != cut_vertex || v2 != aux) {
             if (st1.empty()) {
-                verificarVertice();
+                classificarGrafo();
                 return;
             }
             v1 = this.st1.pop();
@@ -98,15 +105,15 @@ class Graph {
         }
     }
 
-    void verificarVertice() {
-        componentesBiconexas.forEach(vertice -> System.out.println(vertice.id));
+    void classificarGrafo() {
         for (Vertex vertice : componentesBiconexas) {
             if (!(vertice.degree() == componentesBiconexas.size() - 1)) {
-                System.out.println("não é um grafo bloco");
+                isClique = false;
+                System.out.println("Não é uma clique");
                 return;
             }
         }
-        System.out.println("Este é um grafo bloco");
+        System.out.println("É uma clique");
     }
 
     void add_edge(Integer id1, Integer id2) {
@@ -193,18 +200,5 @@ class Vertex {
 
     int degree() {
         return nbhood.size();
-    }
-
-    void discover(Vertex parent) {
-        this.parent = parent;
-        this.dist = parent.dist + 1;
-    }
-
-    Vertex get_root() {
-        if (parent == null)
-            root = this;
-        else
-            root = parent.get_root();
-        return root;
     }
 }
