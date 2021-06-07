@@ -50,9 +50,9 @@ class Graph {
             }
         }
         if (isClique) {
-            System.out.println("\nEste é um grafo bloco pois todas as suas Componentes Biconexas Maximal SÃO CLIQUES \n");
+            System.out.println("\nEste é um Grafo Bloco pois todas as suas Componentes Biconexas Maximal SÃO CLIQUES \n");
         } else {
-            System.out.println("\nEste NÃO é um grafo bloco pois existem Componentes Biconexas Maximal que NÃO SÃO CLIQUES \n");
+            System.out.println("\nEste NÃO é um Grafo Bloco pois existem Componentes Biconexas Maximal que NÃO SÃO CLIQUES \n");
         }
     }
 
