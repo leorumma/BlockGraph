@@ -176,7 +176,7 @@ class Graph {
 class Vertex {
     Integer id;
     HashMap<Integer, Vertex> nbhood;
-    Vertex parent, root;
+    Vertex parent;
     Integer dist, d, f;
     Integer low;
 
